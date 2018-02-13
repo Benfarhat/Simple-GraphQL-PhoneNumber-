@@ -67,7 +67,7 @@
         <div class="container">
             <h1 class="title">Mutation</h1>
             <hr>
-            <form action="/quotes" method="POST">
+            <form action="/addContact" method="POST">
 
                 <div class="field">
                     <label class="label">Contact Name</label>
@@ -87,8 +87,7 @@
             <h1 class="title">Query</h1>
             <hr>
             <div>
-                <a class="button is-link is-radiusless" href="/graphql?query={todo(itemId:1){itemId,item}}">GraphQL Test</a>
-                <textarea class="textarea is-radiusless" placeholder="Content from graphQL"></textarea>
+                <a class="button is-link is-radiusless" href="/graphql?query={contacts{itemId,name,phone}}">GraphiQL Test</a>
             </div>
         </div>
     </section>

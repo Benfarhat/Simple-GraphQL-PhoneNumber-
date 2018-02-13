@@ -1,10 +1,13 @@
 const express = require("express");
-const bodyParser = require('body-parser')
+const bodyParser = require('body-parser');
 const mongoose = require("mongoose");
-var { PhoneNumber } = require("./Models/mongoose");
+const { PhoneNumber } = require("./Models/mongoose");
+const { schema } = require("./Schema/Schema");
+const graphqlHTTP = require('express-graphql');
+
 
 // Mongoose connection
-mongoose.connect("mongodb://localhost:27017/local");
+mongoose.connect("mongodb://localhost:27017/test");
 
 var db = mongoose.connection;
 db.on("error", e => {
@@ -27,7 +30,13 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
 
-app.listen(3000, () => {
+
+app.use('/graphql', graphqlHTTP (req => ({
+  schema,
+  graphiql:true
+ })))
+
+app.listen(3333, () => {
   console.log("Server is working...");
 });
 
@@ -35,13 +44,11 @@ app.get("/", (req, res) => {
   res.sendFile(__dirname + "/index.html");
 });
 
-app.get("/quotes", (req, res) => {
-  res.end();
-  console.log('---------------------')
-  console.log(PhoneNumber);
-});
 
-app.post("/quotes", (req, res) => {
+app.post("/addContact", (req, res) => {
+
+
+
 
   var newContact = new PhoneNumber({
     itemId: 1,
@@ -58,5 +65,6 @@ app.post("/quotes", (req, res) => {
 
     res.redirect("/");
   });
+
 
 });
